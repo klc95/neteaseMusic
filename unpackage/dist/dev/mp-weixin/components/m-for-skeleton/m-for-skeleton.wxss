@@ -24,31 +24,40 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.music-head.data-v-15b64ec4 {
-  height: 75px;
-  text-align: center;
-  line-height: 80px;
-  font-size: 16px;
-  color: black;
-  overflow: hidden;
-  position: relative;
-}
-.music-head-icon.data-v-15b64ec4 {
-  width: 97px;
-  height: 31px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 15px;
-  position: absolute;
-  left: 10px;
-  top: 25px;
-  line-height: 31px;
+.skeleton.data-v-292d9f24 {
   display: flex;
-  justify-content: space-evenly;
-  color: white;
+  padding: 20rpx;
+  box-sizing: border-box;
 }
-.music-head-iconBlack.data-v-15b64ec4 {
-  color: black;
-  background: white;
-  border: 1px black solid;
+.skeleton.vertical.data-v-292d9f24 {
+  flex-direction: column;
+  align-items: center;
+}
+.skeleton.vertical .skeleton-content.data-v-292d9f24 {
+  width: 100%;
+  margin-left: 0;
+  margin-top: 20rpx;
+}
+.skeleton-avatar.data-v-292d9f24 {
+  background: #dddddd;
+  flex-shrink: 0;
+}
+.skeleton-content.data-v-292d9f24 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;
+  overflow: hidden;
+}
+.skeleton-content-title.data-v-292d9f24 {
+  height: 40rpx;
+  width: 50%;
+  background: #dddddd;
+}
+.skeleton-content-row.data-v-292d9f24 {
+  width: 80%;
+  height: 40rpx;
+  background: #dddddd;
+  margin-top: 20rpx;
 }
 
