@@ -1,13 +1,15 @@
 <template>
 	<view class="list">
-		<view class="fixbg" :style="{backgroundImage:'url('+ playlist.coverImgUrl +')'}"></view>
+		<view class="fixbg" :style="{'background-image':'url('+ playlist.coverImgUrl +')'}"></view>
 		<music-head title="歌单" icon="true"></music-head>
 		<view class="container" v-show="!isLoading">
 			<scroll-view scroll-y="true">
 				<view class="list-head">
 					<view class="list-head-img">
 						<image :src="playlist.coverImgUrl" mode=""></image>
-						<text class="iconfont icon-yousanjiao">{{playlist.playCount | formatCount}}</text>
+						<text class="iconfont icon-yousanjiao">
+							{{playlist.playCount | formatCount}}
+						</text>
 					</view>
 					<view class="list-head-text">
 						<view>{{playlist.name}}</view>
@@ -41,7 +43,7 @@
 						</view>
 						<text class="iconfont icon-bofang"></text>
 					</view> -->
-					<view class="list-music-item" @tap="handleToDetail" v-for="(item,index) in playlist.tracks" :key="index">
+					<view class="list-music-item" @tap="handleToDetail(item.id)" v-for="(item,index) in playlist.tracks" :key="index">
 						<view class="list-music-top">{{index + 1}}</view>
 						<view class="list-music-song">
 							<view>{{item.name}}</view>
@@ -85,17 +87,19 @@
 				if(res[1].data.code == '200') {
 					this.playlist = res[1].data.playlist;
 					this.privileges = res[1].data.privileges;
+					this.$store.commit('INIT_TOPLISTIDS', res[1].data.playlist.trackIds);
 					this.isLoading = false;
 					uni.hideLoading();
 				}
 			})
 		},
 		methods: {
-			handleToDetail() {
+			handleToDetail(songId) {
 				uni.navigateTo({
-					url: '/pages/detail/detail'
+					url: `/pages/detail/detail?songId=${songId}`
 				});
-			}
+			},
+	
 		}
 	}
 </script>

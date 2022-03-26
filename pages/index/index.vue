@@ -3,11 +3,23 @@
 		<music-head title="网易云音乐"></music-head>
 		<view class="container">
 			<scroll-view scroll-y="true">
-				<view class="index-search">
+				<view class="index-search" @tap="handleToSearch">
 					<text class="iconfont icon-fangdajing"></text>
 					<input type="text" value="搜索歌曲" />
 				</view>
-				<view class="index-list">
+				<view v-if="isLoading">
+					<m-for-skeleton 
+						:avatarSize="200"
+						:row="3"
+						:loading="isLoading"
+						isarc="square"
+						:titleStyle="{}"
+						:title="false"
+						v-for="(item,key) in 4"
+						:key="key">
+					</m-for-skeleton>
+				</view>
+				<view class="index-list" v-else>
 					<!-- <view class="index-list-item">
 						<view class="index-list-img">
 							<image src="../../static/logo.png" mode=""></image>
@@ -19,13 +31,19 @@
 							<view>3.江南 - 林俊杰</view>
 						</view>
 					</view> -->
-					<view class="index-list-item" @tap="handleToList(item.id)" v-for="(item,index) in topList" :key="index">
+					<view class="index-list-item" 
+						  @tap="handleToList(item.id)" 
+						  v-for="(item,index) in topList" 
+						  :key="index"
+					>
 						<view class="index-list-img">
 							<image :src="item.coverImgUrl" mode=""></image>
 							<text>{{item.updateFrequency}}</text>	
 						</view>
 						<view class="index-list-text">
-							<view v-for="(item,index) in item.tracks" :key="index">{{index + 1}}.{{item.first}}-{{item.second}}</view>
+							<view v-for="(item,index) in item.tracks" :key="index">
+								{{index + 1}}.{{item.first}}-{{item.second}}
+							</view>
 						</view>
 					</view>
 					
@@ -40,15 +58,17 @@
 	export default {
 		data() {
 			return {
-				topList: []
+				topList: [],
+				isLoading: true,
 			}
 		},
 		onLoad() {
 			topList().then((res)=>{
-				console.log(res)
+				// console.log(res)
 				if(res.length){
 					setTimeout(()=>{
 						this.topList = res;
+						this.isLoading = false;
 					}, 1000);
 				}
 			});

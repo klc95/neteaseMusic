@@ -1,5 +1,6 @@
 import App from './App'
 import plugins from './plugins.js'
+import store from './store/index.js'
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -7,7 +8,8 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.use(plugins);
 const app = new Vue({
-    ...App
+    ...App,
+	store
 })
 app.$mount()
 // #endif

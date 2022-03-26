@@ -11,5 +11,9 @@ export default {
 				return value;
 			}
 		})
+		Vue.filter('formatTime',function(value){
+			var date = new Date(value);	
+			return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';			
+		});
 	}
 }
