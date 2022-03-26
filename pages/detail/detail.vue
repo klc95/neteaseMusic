@@ -10,12 +10,12 @@
 					<view></view>
 				</view>
 				<view class="detail-lyric">
-					<view class="detail-lyric-wrap" :style="{ transform : 'translateY(' +  - (lyricIndex - 1) * 82  + 'rpx)' }">
+					<view class="detail-lyric-wrap" :style="{transform: 'translateY(' +  - (lyricIndex - 1) * 82  + 'rpx)'}">
 						<!-- <view class="detail-lyric-item">测试文字</view> -->
 						<view class="detail-lyric-item" 
 							  v-for="(item, index) in songLyric" 
 						      :key="index"
-							  :class="{ active :lyricIndex == index}"
+							  :class="{ active: lyricIndex == index}"
 						>
 							{{item.lyric}}
 						</view>
@@ -169,20 +169,20 @@
 					}
 					if(res[3][1].data.code == '200'){
 						let lyric = res[3][1].data.lrc.lyric;
-						// console.log('lyric', lyric)
+						console.log('lyric', lyric)
 						let result = [];
 						let re = /\[([^\]]+)\]([^[]+)/g;
 						lyric.replace(re,($0,$1,$2)=>{
 							// console.log('$0', $0) 时间与歌词
-							// console.log('$1', $1) 时间
-							// console.log('$2', $2) 歌词
-							result.push({ time : this.formatTimeToSec($1) , lyric : $2 });
+							console.log('$1', $1) // 时间
+							console.log('$2', $2) // 歌词
+							result.push({ "time": this.formatTimeToSec($1) , "lyric": $2 });
 						}); 
 						this.songLyric = result;
-						// console.log('this.songLyric', this.songLyric);
+						console.log('this.songLyric', this.songLyric);
 					}
 					if(res[4][1].data.code == '200'){
-						console.log('res[4][1].data', res[4][1].data)					
+						// console.log('res[4][1].data', res[4][1].data)					
 						// #ifdef MP-WEIXIN
 						this.bgAudioMannager = uni.getBackgroundAudioManager();
 						this.bgAudioMannager.title = this.songDetail.name;
@@ -229,14 +229,14 @@
 			listenLyricIndex(){
 				clearInterval(this.timer);
 				this.timer = setInterval(()=>{
-					for(var i=0;i < this.songLyric.length;i++){
-						if(this.songLyric[this.songLyric.length-1].time < this.bgAudioMannager.currentTime){ 
+					for(var i = 0;i < this.songLyric.length;i++){
+						if(this.bgAudioMannager.currentTime > this.songLyric[this.songLyric.length-1].time){ 
 							this.lyricIndex = this.songLyric.length-1;
 							break;
 						}
-						if(this.songLyric[i].time < this.bgAudioMannager.currentTime &&
-						   this.songLyric[i+1].time > this.bgAudioMannager.currentTime){
-							this.lyricIndex = i;
+						if(this.bgAudioMannager.currentTime > this.songLyric[i].time &&
+						   this.bgAudioMannager.currentTime < this.songLyric[i+1].time){
+							this.lyricIndex = i; 
 						}
 					}
 				}, 500);
